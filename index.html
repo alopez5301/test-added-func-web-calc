@@ -762,7 +762,8 @@
     
 // Initialize on page load
 window.onload = function() {
-  applyDarkMode(); // Apply dark mode if saved in localStorage
+    console.log("window.onload triggered");
+    applyDarkMode();
 };
   // Set default curve type to '7pt' and update grid
   currentType = '7pt';
