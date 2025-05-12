@@ -381,16 +381,27 @@
       this.textContent = isDarkMode ? "🌙" : "☀️";
     });
     
-    function applyDarkMode() {
-      const darkMode = localStorage.getItem("darkMode") === "true";
-      if (darkMode) {
-        document.body.classList.add("dark-mode");
-        document.getElementById("darkModeToggle").textContent = "🌙";
-      } else {
-        document.body.classList.remove("dark-mode");
-        document.getElementById("darkModeToggle").textContent = "☀️";
-      }
-    }
+  // Apply dark mode preference from localStorage
+function applyDarkMode() {
+  const darkMode = localStorage.getItem("darkMode") === "true";
+  const toggleButton = document.getElementById("darkModeToggle");
+
+  if (darkMode) {
+    document.documentElement.classList.add("dark-mode"); // Use html element for better cascading
+    if (toggleButton) toggleButton.textContent = "🌙";
+  } else {
+    document.documentElement.classList.remove("dark-mode");
+    if (toggleButton) toggleButton.textContent = "☀️";
+  }
+}
+
+// Toggle dark mode and save preference
+document.getElementById("darkModeToggle").addEventListener("click", function () {
+  document.documentElement.classList.toggle("dark-mode");
+  const isDarkMode = document.documentElement.classList.contains("dark-mode");
+  localStorage.setItem("darkMode", isDarkMode ? "true" : "false");
+  this.textContent = isDarkMode ? "🌙" : "☀️";
+});
     
     const temperatureSets = {
       '7pt': [70, 200, 300, 400, 500, 570, 800],
@@ -760,18 +771,18 @@
       });
     });
     
-// Initialize on page load
-window.onload = function() {
-    console.log("window.onload triggered");
-    applyDarkMode();
-};
+document.addEventListener("DOMContentLoaded", function () {
+  console.log("Page loaded and DOM ready.");
+  
+  applyDarkMode(); // Now this works because DOM is fully loaded
+
   // Set default curve type to '7pt' and update grid
   currentType = '7pt';
   currentTemperatures = temperatureSets[currentType];
-  document.querySelector("input[value='7pt']").checked = true; // Ensure the 7pt radio button is selected
-  updateGrid(); // Update the grid based on the default curve type
+  document.querySelector("input[value='7pt']").checked = true;
+  updateGrid();
 
-  displaySavedCalculations(); // Display any saved calculations
+  displaySavedCalculations(); // Display saved TCR calculations
 
   // Set today's date as default in the submission form
   const today = new Date().toISOString().split('T')[0];
@@ -779,7 +790,7 @@ window.onload = function() {
   if (dateInput) {
     dateInput.value = today;
   }
-};
+});
   </script>
 </body>
 </html>
