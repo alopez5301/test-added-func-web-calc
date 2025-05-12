@@ -743,19 +743,25 @@
       });
     });
     
-    // Initialize on page load
-    window.onload = function() {
-      applyDarkMode();
-      updateGrid();
-      displaySavedCalculations();
-      
-      // Set today's date as default in the submission form
-      const today = new Date().toISOString().split('T')[0];
-      const dateInput = document.getElementById('submitDate');
-      if (dateInput) {
-        dateInput.value = today;
-      }
-    };
+// Initialize on page load
+window.onload = function() {
+  applyDarkMode(); // Apply dark mode if saved in localStorage
+
+  // Set default curve type to '7pt' and update grid
+  currentType = '7pt';
+  currentTemperatures = temperatureSets[currentType];
+  document.querySelector("input[value='7pt']").checked = true; // Ensure the 7pt radio button is selected
+  updateGrid(); // Update the grid based on the default curve type
+
+  displaySavedCalculations(); // Display any saved calculations
+
+  // Set today's date as default in the submission form
+  const today = new Date().toISOString().split('T')[0];
+  const dateInput = document.getElementById('submitDate');
+  if (dateInput) {
+    dateInput.value = today;
+  }
+};
   </script>
 </body>
 </html>
