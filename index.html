@@ -761,8 +761,12 @@
     });
     
 // Initialize on page load
-window.onload = function() {
-  applyDarkMode(); // Apply dark mode if saved in localStorage
+
+ document.addEventListener("DOMContentLoaded", function() {
+    applyDarkMode();
+    updateGrid();
+    displaySavedCalculations();
+});
 
   // Set default curve type to '7pt' and update grid
   currentType = '7pt';
