@@ -761,13 +761,9 @@
     });
     
 // Initialize on page load
-
- document.addEventListener("DOMContentLoaded", function() {
-    applyDarkMode();
-    updateGrid();
-    displaySavedCalculations();
-});
-
+window.onload = function() {
+  applyDarkMode(); // Apply dark mode if saved in localStorage
+};
   // Set default curve type to '7pt' and update grid
   currentType = '7pt';
   currentTemperatures = temperatureSets[currentType];
